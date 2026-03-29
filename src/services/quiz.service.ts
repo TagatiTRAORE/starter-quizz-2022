@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Quiz } from '../models/quiz.model';
-import { QUIZ_LIST } from '../mocks/quiz-list.mock';
+import { QUIZ_LIST } from '../mocks/quiz-list-with-id.mock';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -29,11 +29,11 @@ export class QuizService {
   /**
    * Stocke l'url à appeler
    */
-  private quizUrl = 'https://raw.githubusercontent.com/NablaT/starter-quiz-two/master/mock-quiz.json';
+  //private quizUrl = '../mocks/quiz-list-woth-id.mock.ts';
 
   constructor(private http: HttpClient) {
   }
-
+  /*
   getQuizzes(){
     this.http.get<Quiz[]>(this.quizUrl).subscribe({
       next: (quizzesimported) => {
@@ -46,13 +46,17 @@ export class QuizService {
         this.quizzes$.next(this.quizzes);
       }
     });
-  }
+  }*/
 
   addQuiz(quiz: Quiz) {
     // You need here to update the list of quiz and then update our observable (Subject) with the new list
     // More info: https://angular.io/tutorial/toh-pt6#the-searchterms-rxjs-subject
-    
-    this.quizzes.push(quiz);
+    const maxId = this.quizzes.length > 0 ? Math.max(...this.quizzes.map(q => q.id)) : 0;
+    const quizToAdd = {
+      ...quiz,
+      id:maxId +1
+    };
+    this.quizzes.push(quizToAdd);
     this.quizzes$.next(this.quizzes);
   }
 

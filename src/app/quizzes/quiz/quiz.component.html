@@ -4,6 +4,7 @@
         <i *ngIf="quiz.theme === 'Actor'" class="fas fa-film"></i>
         Nom : {{quiz.name}}
     </h2>
+    <a routerLink="../edit-quiz/:{{quiz.id}}">Edit<br></a>
     <span> 
         Theme : {{quiz.theme}} 
     </span>
